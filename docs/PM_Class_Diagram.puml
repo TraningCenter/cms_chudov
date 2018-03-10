@@ -1,0 +1,99 @@
+@startuml
+
+package "Post Manager"{
+
+    interface Entity{
+    }
+
+    interface TransferData{
+    }
+
+    class UserEntity{
+        Integer userId
+        String username
+        String email
+        String password
+        String role
+        List<PostMetaEntity> posts
+    }
+
+    class PostMetaEntity{
+        Integer postId
+        Integer userId
+        UserEntity user
+    }
+
+    class UserDto{
+        Integer userId
+        String username
+        String email
+        String password
+        String role
+    }
+
+    class PostMetaDto{
+        Integer postId
+    }
+
+    interface UserMapper{
+        UserEntity getUserByUsername(String username)
+        UserEntity getUserByEmail(String email)
+        UserEntity getUserByLogin(String login)
+        void saveUser(UserEntity user)
+        List<Integer> getAllUsersPostsIds(Integer userId)
+    }
+
+    interface PostMetaMapper{
+        PostMetaEntity getPostMeta(Integer userId)
+        void savePostMeta(PostMeta postMeta)
+    }
+
+    class SessionFactory{
+        SqlSessionFactory buildSqlSessionFactory()
+    }
+
+    class AuthenticationController{
+        ResponseEntity signUp(UserDto user)
+        ResponseEntity signIn(UserDto user)
+    }
+
+    class PostController{
+        ResponseEntity getAllPostsMeta(Integer userId)
+        ResponseEntity savePostMeta(PostMetaEntity postMeta)
+    }
+
+    interface DtoEntityUtil{
+        Entity dtoToEntity(Dto dto)
+        Dto entityToDto(Entity entity)
+    }
+
+    class UserDtoEntityUtil{
+        UserEntity dtoToEntity(Dto dto)
+        UserDto entityToDto(Entity entity)
+    }
+
+    class PostMetaDtoEntityUtil{
+        PostMetaEntity dtoToEntity(Dto dto)
+        PostMetaDto entityToDto(Entity entity)
+    }
+
+    UserMapper o-- UserEntity
+    PostMetaMapper o-- PostMetaEntity
+
+    Entity <|.up. UserEntity
+    Entity <|.up. PostMetaEntity
+    TransferData <|.up. UserDto
+    TransferData <|.up. PostMetaDto
+    DtoEntityUtil <|.. UserDtoEntityUtil
+    DtoEntityUtil <|.. PostMetaDtoEntityUtil
+
+    AuthenticationController *-up- SessionFactory
+    PostController *-up- SessionFactory
+
+    UserDtoEntityUtil *-- AuthenticationController
+    PostMetaDtoEntityUtil *-- PostController
+
+    PostController o-- PostMetaDto
+    AuthenticationController o-- UserDto
+}
+@enduml

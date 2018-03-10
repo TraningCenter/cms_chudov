@@ -1,0 +1,39 @@
+@startuml
+
+actor User
+
+group "Sign In"
+    User -> User_Interface : authentication request
+    User_Interface -> Post_Manager : send user data
+    Post_Manager -> Post_Manager : check\nuser data
+    Post_Manager -> User_Interface : auth response
+    User_Interface -> User : auth response
+end group
+
+group "Sign Up"
+    User -> User_Interface : register request
+    User_Interface -> Post_Manager : send user data
+    Post_Manager -> Post_Manager : save\nuser data
+    Post_Manager -> User_Interface : response ok
+    User_Interface -> User : registration successful
+end group
+
+group "Actions with articles"
+    User -> User_Interface : request articles
+    User_Interface -> Post_Manager : get articles ids
+    Post_Manager -> User_Interface : response with ids
+    User_Interface -> Content_Manager : request articles by id
+    Content_Manager -> User_Interface : response with articles contents
+    User_Interface -> User : displaying received content
+
+    User -> User_Interface : article creation
+    User_Interface -> Content_Manager : send article content
+    Content_Manager -> Content_Manager : save article\ncontent
+    Content_Manager -> User_Interface : response ok
+    User_Interface -> Post_Manager : send article id
+    Post_Manager -> Post_Manager : save\narticle id
+    Post_Manager -> User_Interface : response ok
+    User_Interface -> User : article is published
+end group
+
+@enduml

@@ -1,0 +1,60 @@
+@startuml
+
+package "User Interface" {
+
+    class AuthenticationController{
+        String signUp(SignUpDto data)
+        String signIn(SignInDto data)
+        void logout()
+    }
+
+    class PostController{
+        String getLastArticles()
+        String getArticles(long userId)
+        String createArticle(ArticleDto article)
+        String editArticle(long articleId)
+    }
+
+    class Sender{
+        Response send(Request request)
+    }
+
+    class Response{
+        String response
+    }
+
+    interface TransferData{
+    }
+
+    class SignUpDto{
+        String username
+        String email
+        String password
+    }
+
+    class SignInDto{
+        String login
+        String password
+    }
+
+    class ArticleDto{
+        Map<String, String> content
+    }
+
+    class Request{
+        TransferData data
+        String url
+    }
+
+    TransferData <|.down. SignUpDto
+    TransferData <|.down. SignInDto
+    TransferData <|.right. ArticleDto
+
+    AuthenticationController *-- Sender
+    PostController *-- Sender
+    Sender o-- Request
+    Sender *-left- Response
+    Request *-right- TransferData
+}
+
+@enduml

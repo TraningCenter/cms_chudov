@@ -1,0 +1,42 @@
+@startuml
+
+package "Content Manager"{
+    class PostMetaEntity{
+        Integer metaId
+        Integer postId
+        Date postDate
+        List<PostEntity> post
+    }
+
+    class PostEntity{
+        Integer id
+        Integer postId
+        String content
+        PostMetaEntity postMeta
+    }
+
+    class PostDao{
+        PostMetaEntity getPost(Integer postId)
+        List<PostMetaEntity> getAllPosts()
+        void savePost(Integer postId, List<String> post)
+        void deletePost(Integer postId)
+        void updatePost(Integer postId, List<String> post)
+    }
+
+    class PostController{
+        ResponseEntity getPostContent(Integer postId)
+        ResponseEntity savePost(PostDto post)
+        ResponseEntity editPost(PostDto post)
+        ResponseEntity deletePost(Integer postId)
+    }
+
+    class PostDto{
+        Integer postId
+        Date postDate
+        List<String> postContent
+    }
+
+    PostController o-- PostDto
+    PostController *-- PostDao
+}
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+
+package "User Interface" {
+    [View] <.left. [Client UI]
+    [View] -- [Server UI]
+}
+
+package "Content Manager" {
+    [CM Controller] <-right- [Content Manager]
+
+    database "CM Database" {
+        [Content Manager] --> Hibernate
+        Hibernate -left- [Content Database]
+    }
+}
+
+package "Post Manager" {
+    [PM Controller] -left-> [Post Manager]
+    [Server UI] -- [PM Controller] : REST
+
+    database "PM Database"{
+        [Post Manager] --> MyBatis
+        [Post Database] -left- MyBatis
+    }
+}
+
+node "Proxy Server"{
+    [Server UI] -right- [Proxy] : HTTP
+    [Proxy] -- [CM Controller] : REST
+}
+
+@enduml

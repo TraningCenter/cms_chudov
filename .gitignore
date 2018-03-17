@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
 # Log file
 *.log
 
@@ -17,6 +20,28 @@
 *.zip
 *.tar.gz
 *.rar
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

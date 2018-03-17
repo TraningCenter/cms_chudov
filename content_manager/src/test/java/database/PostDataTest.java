@@ -14,10 +14,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebConfig.class, PersistenceConfig.class})
@@ -47,7 +46,7 @@ public class PostDataTest {
 
         String title = "Test post";
 
-        PostMetaEntity postMeta = new PostMetaEntity(postId, title, new Date(System.currentTimeMillis()), post);
+        PostMetaEntity postMeta = new PostMetaEntity(postId, title, new Timestamp(System.currentTimeMillis()), post);
 
         postService.savePost(postMeta);
 

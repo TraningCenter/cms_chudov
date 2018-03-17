@@ -5,7 +5,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -23,7 +23,7 @@ public class PostMetaEntity implements Serializable{
     private String title;
 
     @Column(name = "post_date")
-    private Date postDate;
+    private Timestamp postDate;
 
     @OneToMany(mappedBy = "postMeta",
             cascade = CascadeType.ALL,
@@ -34,7 +34,7 @@ public class PostMetaEntity implements Serializable{
     public PostMetaEntity(){
     }
 
-    public PostMetaEntity(Long postId, String title, Date postDate, List<PostEntity> posts){
+    public PostMetaEntity(Long postId, String title, Timestamp postDate, List<PostEntity> posts){
         this.postId = postId;
         this.title = title;
         this.postDate = postDate;
@@ -65,11 +65,11 @@ public class PostMetaEntity implements Serializable{
         this.title = title;
     }
 
-    public Date getPostDate() {
+    public Timestamp getPostDate() {
         return postDate;
     }
 
-    public void setPostDate(Date postDate) {
+    public void setPostDate(Timestamp postDate) {
         this.postDate = postDate;
     }
 

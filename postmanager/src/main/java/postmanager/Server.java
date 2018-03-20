@@ -1,30 +1,30 @@
 package postmanager;
 
-
 import io.vertx.core.AbstractVerticle;
-import io.vertx.ext.web.handler.sockjs.SockJSHandler;
-
-import java.util.concurrent.atomic.AtomicInteger;
+import io.vertx.core.Future;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.BodyHandler;
 
 public class Server extends AbstractVerticle{
 
-    private SockJSHandler handler = null;
-    private AtomicInteger online = new AtomicInteger(0);
-
     @Override
-    public void start() throws Exception {
-        if (!deploy()){
+    public void start(Future<Void> startFuture) throws Exception {
 
-        }
-    }
+        /*Router router = Router.router(vertx);
 
-    private boolean deploy(){
-        int hostPost;
-    }
-
-    private int getFreePort(){
-        int hostPort = 8080;
-
-        if ()
+        router.route().handler(BodyHandler.create());
+        router.get("/vertx").handler()*/
+        vertx
+                .createHttpServer()
+                .requestHandler(r -> r.response().end("Ok"))
+                .listen(
+                        config().getInteger("http.port", 8080),
+                        result -> {
+                    if (result.succeeded()){
+                        startFuture.complete();
+                    } else {
+                        startFuture.fail(result.cause());
+                    }
+                });
     }
 }
